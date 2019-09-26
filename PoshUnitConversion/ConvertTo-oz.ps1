@@ -1,15 +1,15 @@
-function ConvertTo-Lbs{
+function ConvertTo-oz{
     <#
 	.SYNOPSIS
-		Convert Mass to Lbs.
+		Convert Mass to oz.
 	.DESCRIPTION
-        Convert Mass to lbs. Input can be in kg, gram, stone, once, quintal, us ton or imperial ton.
+        Convert Mass to oz. Input can be in kg, lbs, gram, once, quintal, us ton or imperial ton.
     .PARAMETER kg
-        A Mass value in kilogram
+        A Mass value in kg
+    .PARAMETER lbs
+        A Mass value in lbs
     .PARAMETER gram
         A Mass value in gram
-    .PARAMETER st
-        A Mass value in Stone
     .PARAMETER oz
         A Mass value in once
     .PARAMETER quintal
@@ -21,23 +21,23 @@ function ConvertTo-Lbs{
     .PARAMETER precision
         The number of decimal digits of converted value
     .EXAMPLE
-        ConvertTo-Lbs -kg 200
+        ConvertTo-oz -kg 200
     .EXAMPLE
-        ConvertTo-Lbs -quintal 14 -precision 2
+        ConvertTo-oz -quintal 14 -precision 2
 	#>
     param(
         [Parameter(ParameterSetName='kg',Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [double] $Kg,
+        [Parameter(ParameterSetName='lbs',Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [double] $gram,
         [Parameter(ParameterSetName='gram',Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [double] $gram,
         [Parameter(ParameterSetName='st',Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [double] $st,
-        [Parameter(ParameterSetName='oz',Mandatory=$true)]
-        [ValidateNotNullOrEmpty()]
-        [double] $oz,
         [Parameter(ParameterSetName='quintal',Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [double] $quintal,
@@ -58,7 +58,7 @@ function ConvertTo-Lbs{
     $path = Get-ModulePath "PoshUnitConversion"
     [Reflection.Assembly]::LoadFile("$Path\binary\UnitConversion.dll") | Out-Null
     try{
-        $converter = [UnitConversion.MassConverter]::new($TargetUnit, "lbs")
+        $converter = [UnitConversion.MassConverter]::new($TargetUnit, "oz")
         if($Precision){
             $retValue = $converter.LeftToRight($value, $Precision)
         }

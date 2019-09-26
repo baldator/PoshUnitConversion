@@ -1,16 +1,16 @@
-function ConvertTo-Lbs{
+function ConvertTo-quintal{
     <#
 	.SYNOPSIS
-		Convert Mass to Lbs.
+		Convert Mass to quintal.
 	.DESCRIPTION
-        Convert Mass to lbs. Input can be in kg, gram, stone, once, quintal, us ton or imperial ton.
+        Convert Mass to quintal. Input can be in kg, lbs, gram, once, quintal, us ton or imperial ton.
     .PARAMETER kg
-        A Mass value in kilogram
+        A Mass value in kg
+    .PARAMETER lbs
+        A Mass value in lbs
     .PARAMETER gram
         A Mass value in gram
-    .PARAMETER st
-        A Mass value in Stone
-    .PARAMETER oz
+    .PARAMETER quintal
         A Mass value in once
     .PARAMETER quintal
         A Mass value in quintal
@@ -21,14 +21,17 @@ function ConvertTo-Lbs{
     .PARAMETER precision
         The number of decimal digits of converted value
     .EXAMPLE
-        ConvertTo-Lbs -kg 200
+        ConvertTo-quintal -kg 200
     .EXAMPLE
-        ConvertTo-Lbs -quintal 14 -precision 2
+        ConvertTo-quintal -oz 14 -precision 2
 	#>
     param(
         [Parameter(ParameterSetName='kg',Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [double] $Kg,
+        [Parameter(ParameterSetName='lbs',Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [double] $gram,
         [Parameter(ParameterSetName='gram',Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [double] $gram,
@@ -38,9 +41,6 @@ function ConvertTo-Lbs{
         [Parameter(ParameterSetName='oz',Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [double] $oz,
-        [Parameter(ParameterSetName='quintal',Mandatory=$true)]
-        [ValidateNotNullOrEmpty()]
-        [double] $quintal,
         [Parameter(ParameterSetName='shorttop',Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [double] $shorttop,
@@ -58,7 +58,7 @@ function ConvertTo-Lbs{
     $path = Get-ModulePath "PoshUnitConversion"
     [Reflection.Assembly]::LoadFile("$Path\binary\UnitConversion.dll") | Out-Null
     try{
-        $converter = [UnitConversion.MassConverter]::new($TargetUnit, "lbs")
+        $converter = [UnitConversion.MassConverter]::new($TargetUnit, "quintal")
         if($Precision){
             $retValue = $converter.LeftToRight($value, $Precision)
         }
