@@ -27,8 +27,8 @@ Describe 'ConvertTo-MassUnit' {
     }
 
     Context 'Check Values'{
-        It 'Convert pound to net ton' {
-            ConvertTo-MassUnit -InputUnit 'pound' -InputValue 1 -OutputUnit 'net ton' | Should Be 0.0004999994053747
+        It 'Convert pokgund to net g' {
+            ConvertTo-MassUnit -InputUnit 'kg' -InputValue 1 -OutputUnit 'g' | Should Be 1000
         }
         It 'Convert oz to min with kilogram' {
             ConvertTo-MassUnit -InputUnit 'oz' -InputValue 200 -OutputUnit 'kilogram' -Precision 2 | Should Be 5.67
