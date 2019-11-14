@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
 
-$moduleName = "Poshstache"
+$moduleName = "PoshUnitConversion"
 $provParams = @{
     Name = 'NuGet'
     MinimumVersion = '2.8.5.208'
