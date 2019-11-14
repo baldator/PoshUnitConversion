@@ -1,16 +1,16 @@
-function ConvertTo-quintal{
+function ConvertTo-Lbs{
     <#
 	.SYNOPSIS
-		Convert Mass to quintal.
+		Convert Mass to Lbs.
 	.DESCRIPTION
-        Convert Mass to quintal. Input can be in kg, lbs, gram, once, quintal, us ton or imperial ton.
+        Convert Mass to lbs. Input can be in kg, gram, stone, once, quintal, us ton or imperial ton.
     .PARAMETER kg
-        A Mass value in kg
-    .PARAMETER lbs
-        A Mass value in lbs
+        A Mass value in kilogram
     .PARAMETER gram
         A Mass value in gram
-    .PARAMETER quintal
+    .PARAMETER st
+        A Mass value in Stone
+    .PARAMETER oz
         A Mass value in once
     .PARAMETER quintal
         A Mass value in quintal
@@ -21,17 +21,14 @@ function ConvertTo-quintal{
     .PARAMETER precision
         The number of decimal digits of converted value
     .EXAMPLE
-        ConvertTo-quintal -kg 200
+        ConvertTo-Lbs -kg 200
     .EXAMPLE
-        ConvertTo-quintal -oz 14 -precision 2
+        ConvertTo-Lbs -quintal 14 -precision 2
 	#>
     param(
         [Parameter(ParameterSetName='kg',Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [double] $Kg,
-        [Parameter(ParameterSetName='lbs',Mandatory=$true)]
-        [ValidateNotNullOrEmpty()]
-        [double] $gram,
         [Parameter(ParameterSetName='gram',Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [double] $gram,
@@ -41,9 +38,12 @@ function ConvertTo-quintal{
         [Parameter(ParameterSetName='oz',Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [double] $oz,
-        [Parameter(ParameterSetName='shorttop',Mandatory=$true)]
+        [Parameter(ParameterSetName='quintal',Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
-        [double] $shorttop,
+        [double] $quintal,
+        [Parameter(ParameterSetName='shortton',Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [double] $shortton,
         [Parameter(ParameterSetName='longton',Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [double] $longton,
@@ -58,7 +58,7 @@ function ConvertTo-quintal{
     $path = Get-ModulePath "PoshUnitConversion"
     [Reflection.Assembly]::LoadFile("$Path\binary\UnitConversion.dll") | Out-Null
     try{
-        $converter = [UnitConversion.MassConverter]::new($TargetUnit, "quintal")
+        $converter = [UnitConversion.MassConverter]::new($TargetUnit, "lbs")
         if($Precision){
             $retValue = $converter.LeftToRight($value, $Precision)
         }

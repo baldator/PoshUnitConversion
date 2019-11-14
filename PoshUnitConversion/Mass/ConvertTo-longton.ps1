@@ -1,29 +1,29 @@
-function ConvertTo-st{
+function ConvertTo-longton{
     <#
 	.SYNOPSIS
-		Convert Mass to stone.
+		Convert Mass to imperial ton.
 	.DESCRIPTION
-        Convert Mass to stone. Input can be in kg, lbs, gram, once, quintal, us ton or imperial ton.
+        Convert Mass to US ton. Input can be in kg, lbs, gram, once, stone, quintal or us ton.
     .PARAMETER kg
-        A Mass value in kilostone
+        A Mass value in kg
     .PARAMETER lbs
         A Mass value in lbs
     .PARAMETER gram
         A Mass value in gram
+    .PARAMETER st
+        A Mass value in stone
     .PARAMETER oz
         A Mass value in once
     .PARAMETER quintal
         A Mass value in quintal
     .PARAMETER shortton
         A Mass value in US ton
-    .PARAMETER longton
-        A Mass value in imperial ton
     .PARAMETER precision
         The number of decimal digits of converted value
     .EXAMPLE
-        ConvertTo-stone -kg 200
+        ConvertTo-longton -kg 200
     .EXAMPLE
-        ConvertTo-stone -quintal 14 -precision 2
+        ConvertTo-longton -oz 14 -precision 2
 	#>
     param(
         [Parameter(ParameterSetName='kg',Mandatory=$true)]
@@ -31,22 +31,22 @@ function ConvertTo-st{
         [double] $Kg,
         [Parameter(ParameterSetName='lbs',Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
-        [double] $gram,
+        [double] $lbs,
         [Parameter(ParameterSetName='gram',Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [double] $gram,
+        [Parameter(ParameterSetName='st',Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [double] $st,
         [Parameter(ParameterSetName='oz',Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [double] $oz,
         [Parameter(ParameterSetName='quintal',Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [double] $quintal,
-        [Parameter(ParameterSetName='shorttop',Mandatory=$true)]
+        [Parameter(ParameterSetName='shortton',Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
-        [double] $shorttop,
-        [Parameter(ParameterSetName='longton',Mandatory=$true)]
-        [ValidateNotNullOrEmpty()]
-        [double] $longton,
+        [double] $shortton,
         [Parameter(Mandatory=$false)]
         [int] $Precision
     )
@@ -58,7 +58,7 @@ function ConvertTo-st{
     $path = Get-ModulePath "PoshUnitConversion"
     [Reflection.Assembly]::LoadFile("$Path\binary\UnitConversion.dll") | Out-Null
     try{
-        $converter = [UnitConversion.MassConverter]::new($TargetUnit, "st")
+        $converter = [UnitConversion.MassConverter]::new($TargetUnit, "longton")
         if($Precision){
             $retValue = $converter.LeftToRight($value, $Precision)
         }

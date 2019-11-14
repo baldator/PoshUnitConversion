@@ -1,11 +1,11 @@
-function ConvertTo-oz{
+function ConvertTo-st{
     <#
 	.SYNOPSIS
-		Convert Mass to oz.
+		Convert Mass to stone.
 	.DESCRIPTION
-        Convert Mass to oz. Input can be in kg, lbs, gram, once, quintal, us ton or imperial ton.
+        Convert Mass to stone. Input can be in kg, lbs, gram, once, quintal, us ton or imperial ton.
     .PARAMETER kg
-        A Mass value in kg
+        A Mass value in kilostone
     .PARAMETER lbs
         A Mass value in lbs
     .PARAMETER gram
@@ -21,9 +21,9 @@ function ConvertTo-oz{
     .PARAMETER precision
         The number of decimal digits of converted value
     .EXAMPLE
-        ConvertTo-oz -kg 200
+        ConvertTo-stone -kg 200
     .EXAMPLE
-        ConvertTo-oz -quintal 14 -precision 2
+        ConvertTo-stone -quintal 14 -precision 2
 	#>
     param(
         [Parameter(ParameterSetName='kg',Mandatory=$true)]
@@ -31,19 +31,19 @@ function ConvertTo-oz{
         [double] $Kg,
         [Parameter(ParameterSetName='lbs',Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
-        [double] $gram,
+        [double] $lbs,
         [Parameter(ParameterSetName='gram',Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [double] $gram,
-        [Parameter(ParameterSetName='st',Mandatory=$true)]
+        [Parameter(ParameterSetName='oz',Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
-        [double] $st,
+        [double] $oz,
         [Parameter(ParameterSetName='quintal',Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [double] $quintal,
-        [Parameter(ParameterSetName='shorttop',Mandatory=$true)]
+        [Parameter(ParameterSetName='shortton',Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
-        [double] $shorttop,
+        [double] $shortton,
         [Parameter(ParameterSetName='longton',Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [double] $longton,
@@ -58,7 +58,7 @@ function ConvertTo-oz{
     $path = Get-ModulePath "PoshUnitConversion"
     [Reflection.Assembly]::LoadFile("$Path\binary\UnitConversion.dll") | Out-Null
     try{
-        $converter = [UnitConversion.MassConverter]::new($TargetUnit, "oz")
+        $converter = [UnitConversion.MassConverter]::new($TargetUnit, "st")
         if($Precision){
             $retValue = $converter.LeftToRight($value, $Precision)
         }
